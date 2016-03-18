@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package>
-  <name>pepper_ros_handson/name>
+  <name>pepper_ros_handson</name>
   <version>0.0.0</version>
   <description>The pepper_ros_handson package</description>
 
