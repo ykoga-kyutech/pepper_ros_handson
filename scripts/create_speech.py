@@ -35,9 +35,6 @@ class CreateSpeech:
             # if the dictionary includes the object ID
             if idx in self.known_objects:
                 self.obj_name = self.known_objects[idx]
-            else:
-                self.obj_name = ''
-                rospy.loginfo('Object ID '+str(idx)+ ' not found in object dictionary.')
         else:
             rospy.loginfo('object NOT found.')
             self.obj_name = ''
