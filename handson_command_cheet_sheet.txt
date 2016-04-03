@@ -3,8 +3,9 @@
 ========================
 
 /* ----------------------
- 1. Pepper起動 ##
+ 1. Pepper起動
 ------------------------- */
+
 # ROSマスター起動
 roscore
 
@@ -52,7 +53,11 @@ rostopic pub --rate=0.5 /speech std_msgs/String ”わーい、久々のテッ�
 /* ----------------------
  1. 画像の学習、認識
 ------------------------- */
+
+# 画像学習、認識を行うノードを起動
 rosrun find_object_2d find_object_2d image:=/pepper_robot/camera/front/image_raw
+
+# 認識結果を表示
 rostopic echo /objects
 
 
@@ -64,7 +69,7 @@ rostopic echo /objects
 cd ~/catkin_ws/src
 catkin_create_pkg create_speech rospy std_msgs
 
-# Python雛形コードのダウンロードとビルド
+# Python雛形コードのダウンロードとパッケージのビルド
 cd create_speech
 mkdir scripts && cd scripts
 curl -o create_speech.py https://raw.githubusercontent.com/ykoga-kyutech/pepper_ros_handson/master/scripts/create_speech_template.py
@@ -75,5 +80,5 @@ source ~/catkin_ws/devel/setup.bash
 # create_speechノードの実行
 rosrun create_speech create_speech.py
 
-# Pythonコード編集
+# Pythonコードの編集
 gedit ~/catkin_ws/src/create_speech/scripts/create_speech.py
