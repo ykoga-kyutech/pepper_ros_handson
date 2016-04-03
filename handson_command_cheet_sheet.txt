@@ -1,0 +1,79 @@
+========================
+	ハンズオン１
+========================
+
+/* ----------------------
+ 1. Pepper起動 ##
+------------------------- */
+# ROSマスター起動
+roscore
+
+# Pepper起動
+roslaunch pepper_bringup pepper_full.launch nao_ip:=PepperのIPアドレス nao_port:=9559 network_interface:=eth0
+
+/* ----------------------
+ 2. センサデータを見てみる 
+------------------------- */
+
+# バンパーセンサ
+rostopic echo /pepper_robot/bumper
+
+# 頭タッチセンサ
+rostopic echo /pepper_robot/tactile_touch
+
+# 脚部ソナーセンサ（前後）
+rostopic echo /pepper_roobot/sonar/front
+rostopic echo /pepper_roobot/sonar/back
+
+# 加速度センサ（脚部、胸部）
+rostopic echo /pepper_robot/imu/base
+rostopic echo /pepper_robot/imu/torso
+
+# 1Dデータをプロット
+rqt_plot
+
+# 画像表示
+rqt_image_view
+
+/* ----------------------
+ 3. アクションを取らせる
+------------------------- */
+
+# 移動
+rostopic pub /cmd_vel geometry_msgs/Twist '{linear: {x: 0.0, y: 0.0, z: 0.0}, angular: {x: 0.0,y: 0.0,z: 0.2}}'
+# 発話
+rostopic pub --rate=0.5 /speech std_msgs/String ”わーい、久々のテックサークルだー”
+
+
+========================
+	ハンズオン２
+========================
+
+/* ----------------------
+ 1. 画像の学習、認識
+------------------------- */
+rosrun find_object_2d find_object_2d image:=/pepper_robot/camera/front/image_raw
+rostopic echo /objects
+
+
+/* ----------------------
+ 2. Pythonコード作成
+------------------------- */
+
+# パッケージ作成
+cd ~/catkin_ws/src
+catkin_create_pkg create_speech rospy std_msgs
+
+# Python雛形コードのダウンロードとビルド
+cd create_speech
+mkdir scripts && cd scripts
+curl -o create_speech.py https://raw.githubusercontent.com/ykoga-kyutech/pepper_ros_handson/master/scripts/create_speech_template.py
+chmod +x create_speech.py
+cd ~/catkin_ws && catkin_make
+source ~/catkin_ws/devel/setup.bash
+
+# create_speechノードの実行
+rosrun create_speech create_speech.py
+
+# Pythonコード編集
+gedit ~/catkin_ws/src/create_speech/scripts/create_speech.py
