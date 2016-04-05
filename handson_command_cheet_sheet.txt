@@ -23,8 +23,8 @@ rostopic echo /pepper_robot/bumper
 rostopic echo /pepper_robot/tactile_touch
 
 # 脚部ソナーセンサ（前後）
-rostopic echo /pepper_roobot/sonar/front
-rostopic echo /pepper_roobot/sonar/back
+rostopic echo /pepper_robot/sonar/front
+rostopic echo /pepper_robot/sonar/back
 
 # 加速度センサ（脚部、胸部）
 rostopic echo /pepper_robot/imu/base
@@ -40,11 +40,11 @@ rqt_image_view
  3. アクションを取らせる
 ------------------------- */
 
-# 移動
-rostopic pub /cmd_vel geometry_msgs/Twist '{linear: {x: 0.0, y: 0.0, z: 0.0}, angular: {x: 0.0,y: 0.0,z: 0.2}}'
 # 発話
 rostopic pub --rate=0.5 /speech std_msgs/String ”わーい、久々のテックサークルだー”
 
+# 移動
+rostopic pub /cmd_vel geometry_msgs/Twist '{linear: {x: 0.0, y: 0.0, z: 0.0}, angular: {x: 0.0,y: 0.0,z: 0.2}}'
 
 ========================
 	ハンズオン２
@@ -81,4 +81,4 @@ source ~/catkin_ws/devel/setup.bash
 rosrun create_speech create_speech.py
 
 # Pythonコードの編集
-gedit ~/catkin_ws/src/create_speech/scripts/create_speech.py
+emacs ~/catkin_ws/src/create_speech/scripts/create_speech.py
